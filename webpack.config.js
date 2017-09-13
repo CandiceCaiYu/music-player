@@ -46,6 +46,10 @@ module.exports = {
 			{
 				test: /\.(mp3|ogg)$/,
 				use: 'file-loader'
+			},
+			{
+				test: /\.(eot|svg|ttf|woff)$/,
+				use: 'file-loader'
 			}
 		]
 	},

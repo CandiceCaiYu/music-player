@@ -1,26 +1,31 @@
 import React from 'react'
 import Header from '../header/index.js'
 import Progress from '../progress/index.js'
+import MusicContent from '../musicContent/index.js'
 import $ from 'jquery'
 import jPlayer from 'jPlayer'
-import theMusic from '../../music/countryStyle.mp3'
-
+//import theMusic from '../../music/countryStyle.mp3'
+import { MUSIC_LIST } from '../../config/musicList.js'
 import './styles.less'
 
-let duration = null;
+let duration = null,
+	songNumber = 0;
+
 export default class Home extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			progress: '-'
+			progress: '-',
+			currentMusicItem: MUSIC_LIST[songNumber]
 		}
 	}
 	componentDidMount() {
+		let music = this.state.currentMusicItem.file;
 		$("#player").jPlayer({
 			ready: function (event) {
 				$("#player").jPlayer("setMedia", {
 					title: "test1或者小城大事",
-					mp3: theMusic
+					mp3: music,
 				}).jPlayer('play');
 			},
 			//swfPath: "../../dist/jplayer", // jquery.jplayer.swf 文件存放的位置
@@ -47,16 +52,50 @@ export default class Home extends React.Component {
 	progressChangeHandler = progress => {
 		$('#player').jPlayer('play', duration * progress)
 	}
+	changeMusicPre = () => {
+		if(songNumber < 1) {
+			return;
+		}
+		songNumber--;
+	}
+	changeMusicNext = () => {
+		if(songNumber < MUSIC_LIST.length) {
+			return;
+		}
+		songNumber++;
+
+	}
+	changeMusicPause = () => {
+		$('#play').jPlayer('pause', 0)
+	}
+	changeMusicPlay = () => {
+		$('#play').jPlayer('play', 0)
+	}
+	changeMusicStop = () => {
+		$('#play').jPlayer('stop')
+	}
+
 	render() {
 		//console.log('progress: ' + this.state.progress)
+		console.log('songNumber: ' + songNumber)
 		return (
 			<div className="home">
-				<Header />
+				<Header song = {this.state.currentMusicItem.title} />
 				<Progress 
 				    progress = { this.state.progress }
 				    progressChangeHandler = { this.progressChangeHandler }
 				    //bgColor = '#f00'
-				></Progress>
+				/>
+				<MusicContent 
+					cover = { this.state.currentMusicItem.cover }
+					title = { this.state.currentMusicItem.title }
+					singer = { this.state.currentMusicItem.singer }
+					changeMusicPre = {this.changeMusicPre}
+					changeMusicNext = {this.changeMusicNext}
+					changeMusicPlay = {this.changeMusiclaye}
+					changeMusicPause = {this.changeMusicPause}
+					changeMusicStop = {this.changeMusStop}
+				/>
 			</div>
 		)
 	}
