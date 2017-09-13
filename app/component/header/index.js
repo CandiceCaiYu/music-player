@@ -9,7 +9,7 @@ export default class Header extends React.Component {
 				<div className="header-logo">
 					<img src={logo} alt="header-logo"/>
 				</div>
-				<h1 className="caption">React Music Player</h1>
+				<h1 className="caption">{this.props.song}</h1>
 			</div>
 		)
 	}
