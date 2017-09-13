@@ -1,7 +1,5 @@
 # music-player
 a musice player which base on jplayer
-# begin
+# start
 npm install <br />
-
-
 npm start
