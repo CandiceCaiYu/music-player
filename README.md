@@ -4,4 +4,4 @@ a music player which base on jplayer
 npm install <br />
 npm start
 # skill
-jplayer && jquery && react && webpack
+jplayer <br/> jquery <br/> react <br/> webpack
