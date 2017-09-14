@@ -16,15 +16,41 @@ export default class Home extends React.Component {
 		super();
 		this.state = {
 			progress: '-',
-			currentMusicItem: MUSIC_LIST[songNumber]
+			currentMusicItem: MUSIC_LIST[songNumber],
+			// playState: {
+			// 	icon: 'icon-zanting',
+			// 	state:  this.changeMusicPlay
+			// }
 		}
 	}
+
 	componentDidMount() {
-		let music = this.state.currentMusicItem.file;
+		this.changeMusic(this.state.currentMusicItem.file);
+	}
+
+	componentWillUpdate(nextProps, nextState) {
+		if(nextState.currentMusicItem) {
+			if(nextState.currentMusicItem.id == this.state.currentMusicItem.id){
+					return;
+			}
+		}
+		
+		this.changeMusic(this.state.currentMusicItem.file);
+	}
+
+	componentWillUnMount() {
+		$('#player').unbind($.jPlayer.event.timeupdate);
+	}
+
+	changeMusic = (music) => {
+		if(!this.state.currentMusicItem){ return; }
+
+		//let music = this.state.currentMusicItem.file;
+
+
 		$("#player").jPlayer({
 			ready: function (event) {
 				$("#player").jPlayer("setMedia", {
-					title: "test1或者小城大事",
 					mp3: music,
 				}).jPlayer('play');
 			},
@@ -44,40 +70,46 @@ export default class Home extends React.Component {
 				//progress: Math.round(event.jPlayer.status.currentTime)    //显示时间
 				progress: event.jPlayer.status.currentPercentAbsolute
 			});
-		});
-	}
-	componentWillUnMount() {
-		$('#player').unbind($.jPlayer.event.timeupdate);
-	}
+		});	}
+	
 	progressChangeHandler = progress => {
 		$('#player').jPlayer('play', duration * progress)
 	}
+
 	changeMusicPre = () => {
 		if(songNumber < 1) {
 			return;
 		}
 		songNumber--;
+		this.setState({
+			currentMusicItem: MUSIC_LIST[songNumber]
+		})
 	}
+
 	changeMusicNext = () => {
-		if(songNumber < MUSIC_LIST.length) {
+		songNumber++;
+		if(songNumber >= MUSIC_LIST.length) {
 			return;
 		}
-		songNumber++;
+		this.setState({
+			currentMusicItem: MUSIC_LIST[songNumber]
+		})
+
 
 	}
-	changeMusicPause = () => {
-		$('#play').jPlayer('pause', 0)
+	changeMusicPause = () => {		
+		$('#player').jPlayer('pause')
 	}
-	changeMusicPlay = () => {
-		$('#play').jPlayer('play', 0)
+
+	changeMusicPlay = () => {		
+		$('#player').jPlayer('play')
 	}
+
 	changeMusicStop = () => {
-		$('#play').jPlayer('stop')
+		$('#player').jPlayer('stop')
 	}
 
 	render() {
-		//console.log('progress: ' + this.state.progress)
-		console.log('songNumber: ' + songNumber)
 		return (
 			<div className="home">
 				<Header song = {this.state.currentMusicItem.title} />
@@ -92,7 +124,7 @@ export default class Home extends React.Component {
 					singer = { this.state.currentMusicItem.singer }
 					changeMusicPre = {this.changeMusicPre}
 					changeMusicNext = {this.changeMusicNext}
-					changeMusicPlay = {this.changeMusiclaye}
+					changeMusicPlay = {this.changeMusicPlay}
 					changeMusicPause = {this.changeMusicPause}
 					changeMusicStop = {this.changeMusStop}
 				/>
