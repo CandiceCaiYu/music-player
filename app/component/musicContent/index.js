@@ -7,7 +7,7 @@ import './styles.less'
 
 export default class MusicContent extends React.Component {
 	render() {
-		const { cover, title, singer, changeMusicPre, changeMusicNext, changeMusicPause, changeMusicStop, changeMusicPlay} = this.props
+		const { cover, title, singer, changeMusicPre, changeMusicNext, changeMusicPause, changeMusicStop, changeMusicPlay, changeMusicRandom, changeMusicLoop, changeMusicLoopAll } = this.props
 		return (
 			<div className="musicContent">
 				<MusicContentDetail
@@ -21,6 +21,9 @@ export default class MusicContent extends React.Component {
 					changeMusicPause = {changeMusicPause}
 					changeMusicStop = {changeMusicStop}
 					changeMusicPlay = {changeMusicPlay}
+					changeMusicRandom = {changeMusicRandom} 
+					changeMusicLoop =  {changeMusicLoop} 
+					changeMusicLoopAll =  {changeMusicLoopAll} 
 				/>
 			</div>
 		)
