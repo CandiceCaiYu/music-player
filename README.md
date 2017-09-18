@@ -1,5 +1,5 @@
 # music-player
-a music player which base on jplayer
+a music player which base on jplayer and react
 # start
 npm install <br />
 npm start
