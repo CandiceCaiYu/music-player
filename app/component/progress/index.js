@@ -1,11 +1,8 @@
 import React from 'react'
-
+import $ from 'jQuery'
 import './styles.less'
 
 export default class Progress extends React.Component {
-	static defaultProps = {
-		bgColor: '#66a969'
-	}
 	changeProgress = (e) => {
 		let progressBar = this.refs.progressBar;
 		let mousePosition = e.clientX;
@@ -15,12 +12,18 @@ export default class Progress extends React.Component {
 		this.props.progressChangeHandler(progress) && this.props.progressChangeHandler(progress)
  	}
 	render() {
+		let time = $.jPlayer.convertTime(this.props.musicTime),
+			totalTime = $.jPlayer.convertTime(this.props.totalTime);
+
 		return (
-			<div className="component-progress" ref = "progressBar" onClick={this.changeProgress} >
-				<div className="progress" style={{width: `${this.props.progress}%`, background: `${this.props.bgColor}`}}>
-					
-				</div>
+			<div className="musicProgress">
+				<div className="musicTime">{time}</div>
+				<div className="component-progress" ref = "progressBar" onClick={this.changeProgress} >
+					<div className="progress" style={{width: `${this.props.progress}%`}}></div>
+				</div>	
+				<div className="musicTotalTime" >{totalTime}</div>			
 			</div>
+
 		)
 	}
 }
