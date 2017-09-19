@@ -17,7 +17,7 @@ export default class Home extends React.Component {
 		this.state = {
 			progress: 0,
 			musicTime: 0,
-			voice: 75,
+			voice: 80,
 			voiceIcon: 'icon-shengyin',
 			currentMusicItem: MUSIC_LIST[songNumber],
 		}
@@ -51,12 +51,18 @@ export default class Home extends React.Component {
 			}else {
 				$('#player').jPlayer('unmute');
 				this.setState({
-					voice: 75
+					voice: this.changeVoiceLevel()
 				})
 			}
 		}
 
 		
+	}
+
+	changeVoiceLevel = () => {
+		$('#player').jPlayer($.jPlayer.event.volumeChange, (e) => {
+			return e.jPlayer.options.volume * 100
+		})
 	}
 
 	componentWillUnMount() {
