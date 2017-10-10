@@ -136,10 +136,11 @@ export default class Home extends React.Component {
 		}
 	} 
 	changeMusicPre = () => {
-		if(songNumber < 1) {
-			return;
-		}
-		songNumber--;
+		// if(songNumber < 1) {
+		// 	return;
+		// }
+		// songNumber--;
+		songNumber = Math.max(0, --songNumber)
 		this.setState({
 			currentMusicItem: MUSIC_LIST[songNumber]
 		})

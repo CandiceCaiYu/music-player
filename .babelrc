@@ -1,6 +1,5 @@
 {
-  "presets": ["env"],
-  "presets": ["es2015", "react"],
+  "presets": ["env","react"],
   "plugins": [
     "transform-es2015-arrow-functions",
     "transform-decorators-legacy",

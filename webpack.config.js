@@ -1,24 +1,15 @@
 var path = require('path');
-var CleanWebpackPlugin = require('clean-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var Webpack = require('webpack');
 
 module.exports = {
 	entry: './app/index.js',
-	devtool: 'inline-source-map',
+	devtool: 'source-map',
 	devServer: {
-		contentBase: './dist',
-		hot:true
+		contentBase: './dist'
 	},
 	plugins: [
-		new CleanWebpackPlugin('./dist'),
-		new Webpack.HotModuleReplacementPlugin(),
-		new HtmlWebpackPlugin({
-			//filename: 'index.html',
-			title: 'Music Player --',
-			template: 'index.html',
-			//inject: true
-		})
+		new Webpack.HotModuleReplacementPlugin()
 	],
 	module: {
 		// loaders是rules.use的别名
@@ -26,30 +17,16 @@ module.exports = {
 			{
 				test: /\.js$/,
 				exclude: path.resolve(__dirname, 'node_modules'),
-				use: [ 
-					{ loader: 'babel-loader' }
-				],
+				use: ['babel-loader'],
 			
 			},
 			{
 				test: /\.less$/,
-				use: [
-					{ loader: 'style-loader' },
-					{ loader: 'css-loader' },
-					{ loader: 'less-loader' }
-				]
+				use: [ 'style-loader','css-loader' , 'less-loader' ]
 			},
 			{
-				test: /\.(png|jpg)$/,
-				use: 'file-loader'
-			},
-			{
-				test: /\.(mp3|ogg)$/,
-				use: 'file-loader'
-			},
-			{
-				test: /\.(eot|svg|ttf|woff)$/,
-				use: 'file-loader'
+				test: /\.(png|jpg|mp3|ogg|eot|svg|ttf|woff)$/,
+				use: ['file-loader']
 			}
 		]
 	},

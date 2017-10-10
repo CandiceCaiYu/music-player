@@ -1,5 +1,6 @@
 import React from 'react'
-import $ from 'jQuery'
+import $ from 'jquery'
+import jPlayer from 'jPlayer'
 import './styles.less'
 
 export default class Progress extends React.Component {
@@ -13,8 +14,8 @@ export default class Progress extends React.Component {
  	}
 	render() {
 		let time = $.jPlayer.convertTime(this.props.musicTime),
-			totalTime = $.jPlayer.convertTime(this.props.totalTime);
-
+		  	totalTime = $.jPlayer.convertTime(this.props.totalTime);
+		
 		return (
 			<div className="musicProgress">
 				<div className="musicTime">{time}</div>
